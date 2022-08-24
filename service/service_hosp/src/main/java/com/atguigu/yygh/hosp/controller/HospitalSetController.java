@@ -72,6 +72,7 @@ public class HospitalSetController {
     @ApiOperation(value = "根据id删除医院设置")
     @DeleteMapping("{id}")
     public R removeById(@PathVariable String id){
+        hospitalSetService.removeById(id);
         return R.ok();
     }
 
