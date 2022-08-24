@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
 
 
@@ -21,10 +22,32 @@ import java.util.List;
 @Api(description = "医院设置接口")
 @RestController
 @RequestMapping("/admin/hosp/hospitalSet")
+@CrossOrigin //跨域支持
 public class HospitalSetController {
 
     @Autowired //@Autowired一样
     private HospitalSetService hospitalSetService;
+
+
+    //在hops模块实现模拟登录接口
+    @ApiOperation(value = "模拟登录")
+    @PostMapping("login")
+    //{"code":20000,"data":{"token":"admin-token"}} 登录请求报文内容
+    public  R login(){
+        return R.ok().data("token","admin-token");
+    }
+
+    //模拟获取用户信息
+    @ApiOperation(value = "模拟获取用户信息")
+    @GetMapping("info")
+    public R info(){
+        //创建集合 把登录信息一一对应封装到map集合里
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("roles","admin");
+        map.put("avatar","https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif");
+        map.put("name","Super Admin");
+        return R.ok().data(map);
+    }
 
 
     @ApiOperation(value = "医院设置列表")
