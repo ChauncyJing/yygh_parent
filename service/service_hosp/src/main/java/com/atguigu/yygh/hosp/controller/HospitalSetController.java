@@ -59,12 +59,12 @@ public class HospitalSetController {
     @GetMapping("findAll")
     public R findAll() {
         //统一添加异常 测试异常
-        try {
-            int i = 10/0;
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw new YyghException(20001,"自定义异常处理");
-        }
+//        try {
+//            int i = 10/0;
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            throw new YyghException(20001,"自定义异常处理");
+//        }
         List<HospitalSet> list = hospitalSetService.list();
         return R.ok().data("list",list);
     }
