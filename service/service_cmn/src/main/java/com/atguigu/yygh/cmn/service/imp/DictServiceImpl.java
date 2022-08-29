@@ -12,10 +12,12 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
@@ -74,6 +76,20 @@ public class DictServiceImpl extends ServiceImpl<DictMapper, Dict> implements Di
         } catch (IOException e) {
             e.printStackTrace();
             throw new YyghException(20001,"导出文件失败");
+        }
+
+    }
+
+    @Override
+    public void importData(MultipartFile file) {
+        try {
+            InputStream inputStream = file.getInputStream();
+            EasyExcel.read(inputStream,DictEeVo.class,
+                    dictListener).sheet().doRead();
+            //new DictListener(baseMapper)
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new YyghException(20001,"导入数据失败");
         }
 
     }
